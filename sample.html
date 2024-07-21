@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="photoGalleryApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Photo Gallery</title>
+    <style>
+        /* CSS styles for the photo gallery */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            background-image: url('bck11.jpg'); 
+            background-size: cover;
+            background-position: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: cursive;
+        }
+        .thumbnails {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .thumbnail {
+            margin: 10px;
+            cursor: pointer;
+            position: relative;
+            perspective: 1000px; /* Set the perspective */
+        }
+        .thumbnail img {
+            width: 236px;
+            height: 174px;
+            border-radius: 5px;
+            transition: transform 0.5s;
+            transform-style: preserve-3d; /* Preserve 3D transformations */
+        }
+        .thumbnail:hover img {
+            transform: rotateY(180deg); /* Rotate the image */
+        }
+        .thumbnail .description {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden; /* Hide the backface */
+            transform: rotateY(180deg); /* Initially flip it to the back */
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: rgba(255, 255, 255, 0.8); /* Background color for description */
+            border-radius: 5px;
+            text-align: left;
+        }
+        .thumbnail:hover .description {
+            transform: rotateY(0deg); /* Rotate it back to the front on hover */
+        }
+        .description h2,
+        .description p {
+            margin: 0;
+        }
+        footer {
+            width: 100%;
+            height: 5vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        footer span {
+            opacity: 0;
+            transition: all .5s ease;
+        }
+
+        footer:hover span {
+            opacity: 1;
+        }
+    </style>
+    <script src="angular.min.js"></script>
+    <script>
+        angular.module('photoGalleryApp', [])
+            .controller('PhotoGalleryController', function($scope) {
+                // List of photos with thumbnails, titles, and descriptions
+                $scope.photos = [
+                    { id: 1, title: 'Painting 1', description: 'Description of painting 1', url: '1_4439be01-21ed-499b-a86a-dfeb4eac255e.avif' },
+                    { id: 2, title: 'Painting 2', description: 'Description of Painting 2', url: 'download (1).jpeg' },
+                    { id: 3, title: 'Painting 3', description: 'Description of Painting 3', url: 'images (1).jpeg' },
+                    { id: 4, title: 'Painting 4', description: 'Description of Painting 4', url: 'images.jpeg' },
+                    { id: 5, title: 'Painting 5', description: 'Description of Painting 5', url: 'tree.jpeg' },
+                    { id: 6, title: 'Painting 6', description: 'Description of Painting 6', url: 'nature.jpeg' },
+                    { id: 7, title: 'Painting 7', description: 'Description of Painting 7', url: 'deer.jpeg' },
+                    { id: 8, title: 'Painting 8', description: 'Description of Painting 8', url: 'bird.jpeg' },
+                    { id: 9, title: 'Painting 9', description: 'Description of Painting 9', url: 'moon.jpeg' }
+                ];
+
+                // Function to set the selected photo for display
+                $scope.setSelectedPhoto = function(photo) {
+                    $scope.selectedPhoto = photo;
+                };
+            });
+    </script>
+</head>
+<body>
+    <div class="container" ng-controller="PhotoGalleryController">
+        <h1>PHOTO GALLERY</h1>
+        <div class="thumbnails">
+            <div class="thumbnail" ng-repeat="photo in photos" ng-click="setSelectedPhoto(photo)">
+                <img ng-src="{{ photo.url }}" alt="{{ photo.title }}">
+                <div class="description">
+                    <h2>{{ photo.title }}</h2>
+                    <p>{{ photo.description }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+       <span>Copyright &copy;2024</span>
+        <span>Developed by Sanjana P and Shashank T.E </span>
+    </footer>
+</body>
+</html>
